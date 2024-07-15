@@ -1,0 +1,66 @@
+<div
+  *ngIf="ViewInitedDelayed"
+>
+  <app-nav></app-nav>
+  <main class="mx-auto max-w-7xl overflow-y-clip">
+    <section
+      id="hero"
+      class="text-start py-32"
+      style="height: 80vh; margin-top: 20vh"
+    >
+      <div class="">
+        <spline-viewer
+        loading-anim-type="spinner-small-light"
+        url="https://prod.spline.design/6JIZANeWvXf4QGlX/scene.splinecode"
+        class="absolute z-10 border-none outline-none w-screen h-screen"
+        style="left: 0%; top: 0%; width: calc(100vw + 160px)"
+      ></spline-viewer>
+      </div>
+
+      <div class="relative max-w-xl z-50" style="max-width: 50%">
+        <h1 class="text-8xl font-light text-white">
+          Build Your <br />
+          Custom PC
+        </h1>
+        <button
+          class="px-6 py-3 text-xl bg-main-color font-bold mt-4 ml-4"
+          [routerLink]="'/dashboard'"
+        >
+          LETS BUILD!
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+<div
+  class="absolute z-50 top-0 left-0 w-screen h-screen bg-white flex justify-center items-center"
+  [ngClass]="{
+    'transition-opacity-out': ViewInitedDelayed,
+    'hidden': ViewInitedDelayed2,
+  }"
+>
+  <div class="🤚">
+    <div class="👉"></div>
+    <div class="👉"></div>
+    <div class="👉"></div>
+    <div class="👉"></div>
+    <div class="🌴"></div>
+    <div class="👍"></div>
+  </div>
+  <div
+    class="absolute top-0 w-full h-full bg-main-color flex justify-center items-center"
+    [ngClass]="{
+      'slow-height': viewInited,
+      'hidden': !viewInited,
+    }"
+  >
+    <h1
+      class="text-4xl font-light text-white opacity-0"
+      [ngClass]="{
+      'transition-opacity-in-delayed': viewInited,
+    }"
+    >
+      BUILD U PC
+    </h1>
+  </div>
+</div>

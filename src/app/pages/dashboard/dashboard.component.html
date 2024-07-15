@@ -1,0 +1,247 @@
+<div *ngIf="isLoading" class="w-100 h-100 flex justify-center items-center">
+  <div class="lds-facebook text-main-color">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+<section class="py-10">
+  <div class="container px-6 py-8 mx-auto">
+    <h3 class="text-2xl font-medium text-gray-700">Equipamentos</h3>
+
+    <div class="mt-4">
+      <div class="flex flex-wrap -mx-6">
+        <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+          <div
+            class="flex items-center justify-center px-5 py-6 bg-white rounded-md shadow-sm hover:scale-110 transition duration-500"
+            (click)="open(addEquipamentoModal)"
+          >
+            <div class="p-3 bg-main-color bg-opacity-75 rounded-full">
+              <span class="mdi mdi-plus-thick text-3xl text-white"></span>
+            </div>
+
+            <div class="mx-5">
+              <h4 class="text-2xl font-semibold text-gray-700">Adicionar</h4>
+              <div class="text-gray-500">equipamento</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+          <div
+            class="flex items-center justify-center px-5 py-6 bg-white rounded-md shadow-sm hover:scale-110 transition duration-500"
+            (click)="deleteEquipamento()"
+          >
+            <div class="p-3 bg-pink-600 bg-opacity-75 rounded-full">
+              <span class="mdi mdi-delete text-3xl text-white"></span>
+            </div>
+
+            <div class="mx-5">
+              <h4 class="text-2xl font-semibold text-gray-700">Deletar</h4>
+              <div class="text-gray-500">equipamento</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8"></div>
+
+    <div class="flex flex-col mt-8">
+      <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div
+          class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg"
+        >
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Selecionar
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Equipamento
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Componentes
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Açoes
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="" *ngIf="equipamentos.length > 0">
+              <ng-container
+                *ngFor="let equipamento of equipamentos; let i = index"
+              >
+                <tr class="text-md bg-gray-50">
+                  <td
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 pointer-events-none"
+                    width="150px"
+                  >
+                    <input
+                      type="checkbox"
+                      class="pointer-events-auto ml-4 cursor-pointer"
+                      (change)="addToMarkeds(equipamento.id, $event)"
+                      style="width: 16px; height: 16px"
+                    />
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                  >
+                    <h1>{{ equipamento.nome }}</h1>
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                  >
+                    <h1 class="leading-5 text-gray-900">
+                      {{
+                        equipamento.componentes.length > 0
+                          ? equipamento.componentes.length
+                          : "n/a"
+                      }}
+                    </h1>
+                  </td>
+                  <td
+                    class="px-6 py-4 font-medium leading-5 whitespace-no-wrap border-b border-gray-200 text-black hover:text-main-color-dark cursor-pointer"
+                    (click)="this.toggleComponent(i)"
+                  >
+                    <a href="javascript:void(0)" class="">Ver mais</a>
+                    <span
+                      class="mdi mdi-chevron-down align-middle text-3xl"
+                    ></span>
+                  </td>
+                </tr>
+                <tr
+                  *ngIf="equipamento.componentes.length > 0"
+                  [ngClass]="{
+                    hidden: this.showComponents !== i
+                  }"
+                >
+                  <td></td>
+                  <td
+                    colspan="3"
+                    class="bg-white px-6 pl-10 py-3 whitespace-no-wrap text-md"
+                  >
+                    <div class="grid grid-cols-3 gap-4">
+                      <div
+                        *ngFor="let componente of equipamento.componentes"
+                        class="py-2 px-6 border-r border-gray-200"
+                      >
+                        <h1>{{ componente.nome }}</h1>
+                        <h1 class="mx-3 my-1">{{ componente.descricao }}</h1>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPAMENTOS MODAL -->
+<ng-template #addEquipamentoModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Equipamento</h4>
+    <button
+      type="button"
+      class="btn-close focus:ring-0"
+      aria-label="Close"
+      (click)="modal.dismiss('cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="equipamentoForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="name">Nome</label>
+        <div class="">
+          <input
+            id="name"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="Ex: Desktop Trabalho OU Pc Gamer"
+            formControlName="nome"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                equipamentoForm.get('nome')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && equipamentoForm.get('nome')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite um nome válido</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <div>
+          <div formArrayName="idsComponentes">
+            <div
+              *ngFor="
+                let idComponenteControl of idsComponentes.controls;
+                let i = index
+              "
+              class="mb-3"
+            >
+              <label [for]="'idComponente' + i">Componente {{ i + 1 }}</label>
+              <div class="input-group">
+                <select
+                  [id]="'idComponente' + i"
+                  [formControlName]="i"
+                  class="form-control focus:ring-0"
+                >
+                  <option value="" selected disabled>
+                    Selecionar Componente
+                  </option>
+                  <option
+                    *ngFor="let componente of componentes"
+                    [value]="componente.id"
+                  >
+                    {{ componente.nome + " - " + componente.descricao }}
+                  </option>
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm ms-2"
+                  (click)="removeComponente(i)"
+                >
+                  <span class="mdi mdi-delete text-xl text-white"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary btn-sm mb-3 text-sm"
+            (click)="addComponente()"
+          >
+            + componente
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary bg-dark text-white"
+        (click)="submitEquipamento()"
+        [disabled]="submitted"
+      >
+        Adicionar
+      </button>
+    </div>
+  </form>
+</ng-template>

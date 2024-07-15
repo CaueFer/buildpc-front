@@ -1,0 +1,434 @@
+<div *ngIf="isLoading" class="w-100 h-100 flex justify-center items-center">
+  <div class="lds-facebook text-main-color">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<section class="py-10">
+  <div class="container px-6 py-8 mx-auto">
+    <div class="flex flex-row justify-between items-center">
+      <h3 class="text-2xl font-medium text-gray-700">Categorias</h3>
+      <button
+        class="flex items-center justify-center shadow-sm px-4 py-1 rounded-xl border border-white/25 hover:bg-gray-900 bg-gray-700 transition duration-300"
+        (click)="open(addCategoriaModal)"
+      >
+        <span class="mdi mdi-plus-thick text-2xl text-white"></span>
+        <h4 class="text-xl font-semibold text-white ml-3">Adicionar</h4>
+      </button>
+    </div>
+
+    <div class="flex flex-col mt-8">
+      <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div
+          class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg"
+        >
+          <table class="min-w-full">
+            <thead>
+              <tr>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Categoria
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Açoes
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="bg-white">
+              <tr *ngFor="let categoria of categorias; let i = index">
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  <div class="text-sm leading-5 text-gray-900">
+                    {{ categoria.nome }}
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 flex flex-row gap-2"
+                >
+                  <button
+                    class="mdi mdi-pencil text-2xl"
+                    (click)="
+                      showEditCategoriaModal(categoria.id);
+                      this.open(editCategoriaModal)
+                    "
+                  ></button>
+                  <button
+                    class="mdi mdi-delete text-2xl"
+                    (click)="deleteCategoria(categoria.id)"
+                  ></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-6 py-8 mx-auto">
+    <div class="flex flex-row justify-between items-center">
+      <h3 class="text-2xl font-medium text-gray-700">Componentes</h3>
+      <button
+        class="flex items-center justify-center shadow-sm px-4 py-1 rounded-xl border border-white/25 hover:bg-gray-900 bg-gray-700 transition duration-300"
+        (click)="open(addComponenteModal)"
+      >
+        <span class="mdi mdi-plus-thick text-2xl text-white"></span>
+        <h4 class="text-xl font-semibold text-white ml-3">Adicionar</h4>
+      </button>
+    </div>
+
+    <div class="flex flex-col mt-8">
+      <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div
+          class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg"
+        >
+          <table class="min-w-full">
+            <thead>
+              <tr>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Componentes
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Descriçao
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Categoria
+                </th>
+                <th
+                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                >
+                  Açoes
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="bg-white">
+              <tr *ngFor="let componente of componentes">
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  <div class="text-sm leading-5 text-gray-900">
+                    {{ componente.nome }}
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  <div class="text-sm leading-5 text-gray-900">
+                    {{ componente.descricao }}
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
+                >
+                  <div class="text-sm leading-5 text-gray-900">
+                    {{ componente.categoria.nome }}
+                  </div>
+                </td>
+                <td
+                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 flex flex-row gap-2"
+                >
+                  <button
+                    class="mdi mdi-pencil text-2xl"
+                    (click)="showEditComponenteModal(componente.id);  this.open(editComponenteModal)"
+                  ></button>
+                  <button
+                    class="mdi mdi-delete text-2xl"
+                    (click)="deleteComponente(componente.id)"
+                  ></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<ng-template #addCategoriaModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Categoria</h4>
+    <button
+      type="button"
+      class="btn-close focus:ring-0"
+      aria-label="Close"
+      (click)="modal.dismiss('cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="categoriaForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="catName">Nome</label>
+        <div class="">
+          <input
+            id="catName"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar nome"
+            formControlName="nome"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                categoriaForm.get('nome')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && categoriaForm.get('nome')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite um nome válido</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="submitCategoria()"
+        [disabled]="submitted"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #editCategoriaModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Atualizar Categoria</h4>
+    <button
+      type="button"
+      class="btn-close focus:ring-0"
+      aria-label="Close"
+      (click)="modal.dismiss('cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="categoriaForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="dateOfBirth">Nome</label>
+        <div class="">
+          <input
+            id="cat-name"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar novo nome"
+            formControlName="nome"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                categoriaForm.get('nome')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && categoriaForm.get('nome')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite um nome válido</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="editCategoria()"
+        [disabled]="submitted"
+      >
+        Atualizar
+      </button>
+    </div>
+  </form>
+</ng-template>
+<!-- CATEGORIAS  END -->
+
+<!-- COMPONENTES -->
+<ng-template #addComponenteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Componente</h4>
+    <button
+      type="button"
+      class="btn-close focus:ring-0"
+      aria-label="Close"
+      (click)="modal.dismiss('cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="componenteForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="name">Nome</label>
+        <div class="">
+          <input
+            id="name"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar nome"
+            formControlName="nome"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                componenteForm.get('nome')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && componenteForm.get('nome')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite um nome válido</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="desc">Descriçao</label>
+        <div class="">
+          <input
+            id="desc"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar descricao"
+            formControlName="desc"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                componenteForm.get('desc')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && componenteForm.get('desc')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite uma descricao válida</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="name">Categoria</label>
+        <div>
+          <select
+            formControlName="id_categoria"
+            class="form-control focus:ring-0"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500':
+                componenteForm.get('id_categoria')?.invalid && submitted
+            }"
+          >
+            <option value="" selected disabled>Selecionar Categoria</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+              {{ categoria.nome }}
+            </option>
+          </select>
+          <span
+            *ngIf="submitted && componenteForm.get('id_categoria')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Selecione uma categoria</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="submitComponente()"
+        [disabled]="submitted"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #editComponenteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Atualizar Componente</h4>
+    <button
+      type="button"
+      class="btn-close focus:ring-0"
+      aria-label="Close"
+      (click)="modal.dismiss('cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="componenteForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="name">Nome</label>
+        <div class="">
+          <input
+            id="name"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar novo nome"
+            formControlName="nome"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                componenteForm.get('nome')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && componenteForm.get('nome')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite um nome válido</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="desc">Descriçao</label>
+        <div class="">
+          <input
+            id="desc"
+            class="form-control mt-3 focus:ring-0"
+            placeholder="digitar nova descricao"
+            formControlName="desc"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500 ':
+                componenteForm.get('desc')?.invalid && submitted
+            }"
+          />
+          <span
+            *ngIf="submitted && componenteForm.get('desc')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Digite uma descricao válida</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="name">Categoria</label>
+        <div>
+          <select
+            formControlName="id_categoria"
+            class="form-control focus:ring-0"
+            [ngClass]="{
+              'border-red-500 placeholder:text-red-500 text-red-500':
+                componenteForm.get('id_categoria')?.invalid && submitted
+            }"
+          >
+            <option value="" selected disabled>Selecionar Categoria</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+              {{ categoria.nome }}
+            </option>
+          </select>
+          <span
+            *ngIf="submitted && componenteForm.get('id_categoria')?.invalid"
+            class="text-sm ml-2 text-red-500"
+            >Selecione uma categoria</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="editComponente()"
+        [disabled]="submitted"
+      >
+        Atualizar
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<!-- COMPONENTES END -->
