@@ -30,7 +30,7 @@ export class Dbservice {
   }
 
   editCategoria(id: any, categoriaData: any): Observable<any[]> {
-    console.log(id, categoriaData);
+    //console.log(id, categoriaData);
     return this.http
       .put<any[]>(`${this.baseUrl}/categorias/${id}`, categoriaData)
       .pipe(
@@ -70,7 +70,7 @@ export class Dbservice {
   }
 
   editComponente(id: any, componenteData: any): Observable<any[]> {
-    console.log(id, componenteData);
+    //console.log(id, componenteData);
     return this.http
       .put<any[]>(`${this.baseUrl}/componentes/${id}`, componenteData)
       .pipe(
@@ -102,8 +102,7 @@ export class Dbservice {
   }
 
   addEquipamento(newEquip: any): Observable<any[]> {
-
-    console.log(newEquip)
+    //console.log(newEquip)
     return this.http.post<any[]>(`${this.baseUrl}/equipamentos`, newEquip).pipe(
       catchError((err) => {
         console.error('Ocorreu um erro:', err);
@@ -113,7 +112,7 @@ export class Dbservice {
   }
 
   editEquipamento(id: any, equipamentoData: any): Observable<any[]> {
-    console.log(id, equipamentoData);
+    //console.log(id, equipamentoData);
     return this.http
       .put<any[]>(`${this.baseUrl}/equipamentos/${id}`, equipamentoData)
       .pipe(

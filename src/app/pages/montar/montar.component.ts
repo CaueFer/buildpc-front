@@ -12,13 +12,13 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-montar',
   standalone: true,
   imports: [CommonModule, NgbModule, NgbDropdown, ReactiveFormsModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  templateUrl: './montar.component.html',
+  styleUrl: './montar.component.scss',
 })
-export class DashboardComponent {
+export class MontarComponent {
   equipamentos: any = {};
   componentes: any = {};
 
@@ -72,10 +72,13 @@ export class DashboardComponent {
   }
 
   fetchComponentes() {
-    this._dbService.getAllComponentes().subscribe((comps) => {
-      this.componentes = comps;
+    this._dbService.getAllComponentes().subscribe((componente) => {
+      this.componentes = componente.sort((a, b) =>
+        a.nome.localeCompare(b.nome)
+      );
 
       //console.log(this.componentes);
+      this.isLoading = false;
     });
   }
 
@@ -126,9 +129,13 @@ export class DashboardComponent {
         },
         error: (error) => {
           if (error) {
-            console.error('Erro ao adicionar componente:', error);
+            //console.error('Erro ao adicionar componente:', error);
 
-            this.errorAlert();
+            if (error.status === 403)
+              this.errorAlert('Sem permissão!');
+            else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+            this.submitted = false;
           }
         },
       });
@@ -163,14 +170,18 @@ export class DashboardComponent {
               this._modalService.dismissAll();
               this.sucessAlert('Componente atualizado!');
 
+              this.submitted = false;
               this.fetchEquipamentos();
             }
           },
           error: (error) => {
             if (error) {
-              console.error('Erro ao atualizar componente:', error);
+              //console.error('Erro ao atualizar componente:', error);
 
-              this.errorAlert();
+              if (error.status === 403) this.errorAlert('Sem permissão!');
+              else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+              this.submitted = false;
             }
           },
         });
@@ -200,9 +211,14 @@ export class DashboardComponent {
 
             await this.fetchEquipamentos();
           }
-        } catch (error) {
-          console.error('Erro ao deletar equipamento:', error);
-          this.errorAlert();
+        } catch (error: any) {
+          //console.error('Erro ao deletar equipamento:', error);
+
+          if (error.status === 403)
+            this.errorAlert('Sem permissão para deletar item!');
+          else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+          this.submitted = false;
         }
       }
     }
@@ -223,14 +239,14 @@ export class DashboardComponent {
       }
     }
 
-    console.log(this.markeds);
+    //console.log(this.markeds);
   }
   // EQUIPAMENTOS END ================================
 
-  errorAlert() {
+  errorAlert(msg: string) {
     Swal.fire({
-      title: 'Error!',
-      text: 'Aconteceu um erro, tente novamente!',
+      title: 'Erro!',
+      text: msg,
       icon: 'error',
       confirmButtonText: 'Ok',
     });

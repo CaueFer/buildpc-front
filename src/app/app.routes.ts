@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { MontarComponent } from './pages/montar/montar.component';
 import { HorizontalNavComponent } from './layouts/horizontal-nav/horizontal-nav.component';
-import { AdminComponent } from './pages/admin/admin.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
@@ -12,8 +12,8 @@ export const routes: Routes = [
     component: HorizontalNavComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'admin', component: AdminComponent },
+      { path: 'montar', component: MontarComponent },
+      { path: 'cadastro', component: CadastroComponent },
     ],
   },
 ];

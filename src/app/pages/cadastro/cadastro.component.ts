@@ -12,13 +12,13 @@ import {
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-admin',
+  selector: 'app-cadastro',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss',
+  templateUrl: './cadastro.component.html',
+  styleUrl: './cadastro.component.scss',
 })
-export class AdminComponent {
+export class CadastroComponent {
   categorias: any[] = [];
   componentes: any[] = [];
 
@@ -97,6 +97,7 @@ export class AdminComponent {
             this._modalService.dismissAll();
             this.sucessAlert('Categoria adicionada!');
 
+            this.submitted = false;
             this.fetchCategorias();
           }
         },
@@ -104,7 +105,8 @@ export class AdminComponent {
           if (error) {
             console.error('Erro ao adicionar categoria:', error);
 
-            this.errorAlert();
+            this.submitted = false;
+            this.errorAlert('Aconteceu um erro, tente novamente!');
           }
         },
       });
@@ -135,14 +137,20 @@ export class AdminComponent {
             this._modalService.dismissAll();
             this.sucessAlert('Categoria atualizada!');
 
+            this.submitted = false;
             this.fetchCategorias();
           }
         },
         error: (error) => {
           if (error) {
-            console.error('Erro ao atualizar categoria:', error);
+            //console.error('Erro ao atualizar categoria:', error);
 
-            this.errorAlert();
+            if (error.status === 403)
+              this.errorAlert('Sem permissão para editar item!');
+            else this.errorAlert('Aconteceu um erro, tente novamente!');
+            
+            this._modalService.dismissAll();
+            this.submitted = false;
           }
         },
       });
@@ -159,14 +167,18 @@ export class AdminComponent {
               this._modalService.dismissAll();
               this.sucessAlert('Categoria deletada!');
 
+              this.submitted = false;
               this.fetchCategorias();
             }
           },
           error: (error) => {
             if (error) {
-              console.error('Erro ao deletar categoria:', error);
+              //console.error('Erro ao deletar categoria:', error);
 
-              this.errorAlert();
+              if (error.status === 403) this.errorAlert('Sem permissão para deletar item!');
+              else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+              this.submitted = false;
             }
           },
         });
@@ -200,14 +212,18 @@ export class AdminComponent {
             this._modalService.dismissAll();
             this.sucessAlert('Componente adicionado!');
 
+            this.submitted = false;
             this.fetchComponentes();
           }
         },
         error: (error) => {
           if (error) {
-            console.error('Erro ao adicionar componente:', error);
+            // console.error('Erro ao adicionar componente:', error);
 
-            this.errorAlert();
+            if (error.status === 403) this.errorAlert('Sem permissão!');
+            else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+            this.submitted = false;
           }
         },
       });
@@ -244,7 +260,8 @@ export class AdminComponent {
         categoria: this.componenteForm.get('id_categoria')?.value,
       };
 
-      this._dbService
+      try {
+        this._dbService
         .editComponente(this.componenteId, newComponent)
         .subscribe({
           next: (response) => {
@@ -252,17 +269,30 @@ export class AdminComponent {
               this._modalService.dismissAll();
               this.sucessAlert('Componente atualizado!');
 
+              this.submitted = false;
               this.fetchComponentes();
             }
           },
           error: (error) => {
             if (error) {
-              console.error('Erro ao atualizar componente:', error);
+              //console.error('Erro ao atualizar componente:', error);
 
-              this.errorAlert();
+              if (error.status === 403)
+                this.errorAlert('Sem permissão para editar item!');
+              else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+              this._modalService.dismissAll();
+              this.submitted = false;
             }
           },
         });
+      }
+      catch(err) {
+        this.submitted = false;
+
+        console.error(err)
+      };
+      
     }
   }
   deleteComponente(id: any) {
@@ -273,12 +303,18 @@ export class AdminComponent {
             if (response) {
               this._modalService.dismissAll();
               this.sucessAlert('Componente deletado!');
+
+              this.submitted = false;
               this.fetchComponentes();
             }
           },
           error: (error) => {
-            console.error('Erro ao deletar componente:', error);
-            this.errorAlert();
+            //console.error('Erro ao deletar componente:', error);
+
+            if (error.status === 403) this.errorAlert('Sem permissão para deletar item!');
+            else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+            this.submitted = false;
           },
         });
       }
@@ -286,10 +322,10 @@ export class AdminComponent {
   }
   // COMPONENTES END ================================
 
-  errorAlert() {
+  errorAlert(msg: string) {
     Swal.fire({
       title: 'Error!',
-      text: 'Aconteceu um erro, tente novamente!',
+      text: msg,
       icon: 'error',
       confirmButtonText: 'Ok',
     });
