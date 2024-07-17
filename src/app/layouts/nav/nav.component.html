@@ -5,10 +5,75 @@
   >
     <div class="">
       <a href="/" class="">
-        <img src="assets/logo.png" width="45%" />
+        <img src="assets/logo.png" width="45%" class="hidden md:block" />
+        <img src="assets/logo-small.png" width="45%" class="md:hidden" />
       </a>
     </div>
-    <div class="text-white flex flex-row gap-6 items-center justify-center">
+
+    <div class="flex items-center">
+      <button
+        (click)="sidebarOpen = true"
+        class="text-main-color focus:outline-none md:hidden"
+      >
+        <svg
+          class="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 6H20M4 12H20M4 18H11"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
+
+      <div
+        [ngClass]="sidebarOpen ? 'block' : 'hidden'"
+        (click)="sidebarOpen = false"
+        class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 md:hidden"
+      ></div>
+
+      <div
+        [ngClass]="
+          sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'
+        "
+        class="fixed inset-y-0 left-0 z-50 w-64 overflow-y-auto transition duration-300 transform bg-gradient-to-br from-black lg:translate-x-0 lg:static lg:inset-0 md:hidden"
+      >
+        <div class="flex items-center justify-center mt-8">
+          <a
+            class="flex items-center justify-center"
+            href="javascript:void(0)"
+            [routerLink]="'/home'"
+          >
+            <img src="assets/logo.png" alt="logo" width="75%" />
+          </a>
+        </div>
+
+        <nav class="mt-10">
+          <a
+            class="flex items-center px-6 py-3 mt-4 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:white"
+            href="javascript:void(0)"
+          >
+            <span class="mx-3">About Us</span>
+          </a>
+
+          <a
+            class="flex items-center px-6 py-3 mt-1 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:white"
+            href="javascript:void(0)"
+          >
+            <span class="mx-3">Contact</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div
+      class="text-white flex-row gap-6 items-center justify-center hidden md:flex"
+    >
       <button class="text-sm">About Us</button>
       <button class="text-sm">Contact</button>
       <button
