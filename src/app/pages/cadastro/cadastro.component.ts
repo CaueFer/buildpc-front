@@ -103,10 +103,15 @@ export class CadastroComponent {
         },
         error: (error) => {
           if (error) {
-            console.error('Erro ao adicionar categoria:', error);
+            //console.error('Erro ao adicionar categoria:', error);
+            this.categoriaForm.reset();
 
+            if (error.status === 403)
+              this.errorAlert('Sem permissão para editar item!');
+            else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+            this._modalService.dismissAll();
             this.submitted = false;
-            this.errorAlert('Aconteceu um erro, tente novamente!');
           }
         },
       });
@@ -136,7 +141,8 @@ export class CadastroComponent {
           if (response) {
             this._modalService.dismissAll();
             this.sucessAlert('Categoria atualizada!');
-
+            
+            this.categoriaForm.reset();
             this.submitted = false;
             this.fetchCategorias();
           }
@@ -148,7 +154,8 @@ export class CadastroComponent {
             if (error.status === 403)
               this.errorAlert('Sem permissão para editar item!');
             else this.errorAlert('Aconteceu um erro, tente novamente!');
-            
+
+            this.categoriaForm.reset();
             this._modalService.dismissAll();
             this.submitted = false;
           }
@@ -175,7 +182,8 @@ export class CadastroComponent {
             if (error) {
               //console.error('Erro ao deletar categoria:', error);
 
-              if (error.status === 403) this.errorAlert('Sem permissão para deletar item!');
+              if (error.status === 403)
+                this.errorAlert('Sem permissão para deletar item!');
               else this.errorAlert('Aconteceu um erro, tente novamente!');
 
               this.submitted = false;
@@ -262,37 +270,37 @@ export class CadastroComponent {
 
       try {
         this._dbService
-        .editComponente(this.componenteId, newComponent)
-        .subscribe({
-          next: (response) => {
-            if (response) {
-              this._modalService.dismissAll();
-              this.sucessAlert('Componente atualizado!');
+          .editComponente(this.componenteId, newComponent)
+          .subscribe({
+            next: (response) => {
+              if (response) {
+                this._modalService.dismissAll();
+                this.sucessAlert('Componente atualizado!');
 
-              this.submitted = false;
-              this.fetchComponentes();
-            }
-          },
-          error: (error) => {
-            if (error) {
-              //console.error('Erro ao atualizar componente:', error);
+                this.componenteForm.reset();
+                this.submitted = false;
+                this.fetchComponentes();
+              }
+            },
+            error: (error) => {
+              if (error) {
+                //console.error('Erro ao atualizar componente:', error);
 
-              if (error.status === 403)
-                this.errorAlert('Sem permissão para editar item!');
-              else this.errorAlert('Aconteceu um erro, tente novamente!');
+                if (error.status === 403)
+                  this.errorAlert('Sem permissão para editar item!');
+                else this.errorAlert('Aconteceu um erro, tente novamente!');
 
-              this._modalService.dismissAll();
-              this.submitted = false;
-            }
-          },
-        });
-      }
-      catch(err) {
+                this.componenteForm.reset();
+                this._modalService.dismissAll();
+                this.submitted = false;
+              }
+            },
+          });
+      } catch (err) {
         this.submitted = false;
 
-        console.error(err)
-      };
-      
+        console.error(err);
+      }
     }
   }
   deleteComponente(id: any) {
@@ -311,7 +319,8 @@ export class CadastroComponent {
           error: (error) => {
             //console.error('Erro ao deletar componente:', error);
 
-            if (error.status === 403) this.errorAlert('Sem permissão para deletar item!');
+            if (error.status === 403)
+              this.errorAlert('Sem permissão para deletar item!');
             else this.errorAlert('Aconteceu um erro, tente novamente!');
 
             this.submitted = false;

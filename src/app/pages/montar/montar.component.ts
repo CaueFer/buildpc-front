@@ -123,6 +123,7 @@ export class MontarComponent {
             this._modalService.dismissAll();
             this.sucessAlert('Componente adicionado!');
 
+            this.componenteForm.reset();
             this.submitted = false;
             this.fetchEquipamentos();
           }
@@ -145,48 +146,50 @@ export class MontarComponent {
   showEditEquipamentoModal(id: any) {
     this.equipamentoId = id;
   }
-  editEquipamento() {
-    this.submitted = true;
 
-    if (this.equipamentoForm.invalid) {
-      setTimeout(() => {
-        this.submitted = false;
-      }, 3000);
+  // UNUSED
+  // editEquipamento() {
+  //   this.submitted = true;
 
-      return;
-    }
+  //   if (this.equipamentoForm.invalid) {
+  //     setTimeout(() => {
+  //       this.submitted = false;
+  //     }, 3000);
 
-    if (this.equipamentoForm.valid) {
-      const newComponent = {
-        nome: this.equipamentoForm.get('nome')?.value,
-        componentes: this.equipamentoForm.get('componentes')?.value,
-      };
+  //     return;
+  //   }
 
-      this._dbService
-        .editEquipamento(this.equipamentoId, newComponent)
-        .subscribe({
-          next: (response) => {
-            if (response) {
-              this._modalService.dismissAll();
-              this.sucessAlert('Componente atualizado!');
+  //   if (this.equipamentoForm.valid) {
+  //     const newComponent = {
+  //       nome: this.equipamentoForm.get('nome')?.value,
+  //       componentes: this.equipamentoForm.get('componentes')?.value,
+  //     };
 
-              this.submitted = false;
-              this.fetchEquipamentos();
-            }
-          },
-          error: (error) => {
-            if (error) {
-              //console.error('Erro ao atualizar componente:', error);
+  //     this._dbService
+  //       .editEquipamento(this.equipamentoId, newComponent)
+  //       .subscribe({
+  //         next: (response) => {
+  //           if (response) {
+  //             this._modalService.dismissAll();
+  //             this.sucessAlert('Componente atualizado!');
 
-              if (error.status === 403) this.errorAlert('Sem permissão!');
-              else this.errorAlert('Aconteceu um erro, tente novamente!');
+  //             this.submitted = false;
+  //             this.fetchEquipamentos();
+  //           }
+  //         },
+  //         error: (error) => {
+  //           if (error) {
+  //             //console.error('Erro ao atualizar componente:', error);
 
-              this.submitted = false;
-            }
-          },
-        });
-    }
-  }
+  //             if (error.status === 403) this.errorAlert('Sem permissão!');
+  //             else this.errorAlert('Aconteceu um erro, tente novamente!');
+
+  //             this.submitted = false;
+  //           }
+  //         },
+  //       });
+  //   }
+  // }
 
   async deleteEquipamento() {
     if (this.markeds.length <= 0) {
