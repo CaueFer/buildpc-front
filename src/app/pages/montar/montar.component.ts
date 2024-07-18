@@ -123,7 +123,7 @@ export class MontarComponent {
             this._modalService.dismissAll();
             this.sucessAlert('Componente adicionado!');
 
-            this.componenteForm.reset();
+            this.equipamentoForm.reset();
             this.submitted = false;
             this.fetchEquipamentos();
           }
