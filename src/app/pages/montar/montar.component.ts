@@ -72,24 +72,30 @@ export class MontarComponent {
   }
 
   fetchComponentes() {
-    this._dbService.getAllComponentes().subscribe((componente) => {
-      this.componentes = componente.sort((a, b) =>
-        a.nome.localeCompare(b.nome)
-      );
+    this._dbService.getAllComponentes().subscribe({
+      next: (componente) => {
+        this.componentes = componente.sort((a, b) =>
+          a.nome.localeCompare(b.nome)
+        );
 
-      //console.log(this.componentes);
-      this.isLoading = false;
+        //console.log(this.componentes);
+        this.isLoading = false;
+      },
+      error: (err) => console.error(err),
     });
   }
 
   // EQUIPAMENTOS START ================================
   fetchEquipamentos() {
-    this._dbService.getAllEquipamentos().subscribe((equips) => {
-      this.equipamentos = equips;
+    this._dbService.getAllEquipamentos().subscribe({
+      next: (equips) => {
+        this.equipamentos = equips;
 
-      //console.log(this.equipamentos);
+        //console.log(this.equipamentos);
 
-      this.isLoading = false;
+        this.isLoading = false;
+      },
+      error: (err) => console.error(err),
     });
   }
 
@@ -132,8 +138,7 @@ export class MontarComponent {
           if (error) {
             //console.error('Erro ao adicionar componente:', error);
 
-            if (error.status === 403)
-              this.errorAlert('Sem permissão!');
+            if (error.status === 403) this.errorAlert('Sem permissão!');
             else this.errorAlert('Aconteceu um erro, tente novamente!');
 
             this.submitted = false;

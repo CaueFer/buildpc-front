@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 
 import Swal from 'sweetalert2';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-cadastro',
@@ -54,19 +55,25 @@ export class CadastroComponent {
   }
 
   fetchCategorias() {
-    this._dbService.getAllCategorias().subscribe((categorias) => {
-      this.categorias = categorias;
-      //console.log(categorias);
+    this._dbService.getAllCategorias().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;
+        //console.log(categorias);
+      },
+      error: (err) => console.error(err),
     });
   }
 
   fetchComponentes() {
-    this._dbService.getAllComponentes().subscribe((componente) => {
-      this.componentes = componente.sort((a, b) =>
-        a.nome.localeCompare(b.nome)
-      );
-      //console.log(this.componentes);
-      this.isLoading = false;
+    this._dbService.getAllComponentes().subscribe({
+      next: (componente) => {
+        this.componentes = componente.sort((a, b) =>
+          a.nome.localeCompare(b.nome)
+        );
+        //console.log(this.componentes);
+        this.isLoading = false;
+      },
+      error: (err) => console.error(err),
     });
   }
 
@@ -141,7 +148,7 @@ export class CadastroComponent {
           if (response) {
             this._modalService.dismissAll();
             this.sucessAlert('Categoria atualizada!');
-            
+
             this.categoriaForm.reset();
             this.submitted = false;
             this.fetchCategorias();
