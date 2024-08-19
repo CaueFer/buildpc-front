@@ -1,31 +1,60 @@
-# BACK
+# Projeto Front-end com Angular e Tailwind
 
-This project was generated with [NODE JS](https://nodejs.org/en) version 20.0.5.
+Está procurando o backend? 👇
 
-# Front
+Repositório Back-end, disponível em [buildpc-backend](https://github.com/CaueFer/buildpc-backend).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.1.
 
-## Development server
+Este projeto é um exemplo de uma aplicação front-end utilizando Angular e Tailwind. A aplicação consiste em um site para montagem de computadores fictícios e permite aos usuários adicionar produtos e peças ao sistema.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+![image](https://github.com/user-attachments/assets/44c1e4c5-c143-4b10-bd90-3894f7db453c)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+![image](https://github.com/user-attachments/assets/49f62c5e-17cc-45c1-8b0f-04ef80339d9e)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Funcionalidades
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+• Exibição dos produtos e categorias.
 
-## Running end-to-end tests
+• Design responsivo, para todos os tipos de dispositivos.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+• Adicionar, editar e excluir: Categorias, componentes e equipamentos.
 
-## Further help
+• Customizar nome e descrição dos mesmos.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+• Armazenamento local dos itens utilizando localStorage.
+
+
+## Tecnologias Utilizadas
+
+•  Angular: Framework Web para renderização de telas do lado do servidor e do cliente.
+
+• Tailwind CSS: Framework CSS utilitário para estilização rápida e responsiva.
+
+## Como Executar o Projeto
+
+1- Clone o projeto 
+
+```bash
+https://github.com/CaueFer/buildpc-front.git
+```
+
+2 - Instalação das Dependências
+
+```bash
+npm install
+```
+
+3 - Executar Localmente
+
+```bash
+ng serve
+```
+
+O projeto estará disponível em [buildpc.com](https://buildupc.vercel.app/home).
+
+## Considerações
+
+Este projeto foi desenvolvido como parte de um teste técnico para demonstrar habilidades em Angular e Tailwind, foco em design responsivo e fetch de APIs.
