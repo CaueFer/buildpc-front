@@ -8,7 +8,7 @@ import { Observable, catchError } from 'rxjs';
 export class Dbservice {
   //private baseUrl = 'http://localhost:3000/api';
   //private baseUrl = 'https://buildpc-backend-production.up.railway.app/api';
-  private baseUrl = 'buildpc-api.vercel.app/api';
+  private baseUrl = 'https://buildpc-api.vercel.app/api';
 
   constructor(private http: HttpClient) {}
 
